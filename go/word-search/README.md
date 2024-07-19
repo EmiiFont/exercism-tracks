@@ -30,6 +30,7 @@ Given a puzzle and a list of words return the location of the first and last let
 
 ## Source
 
+<<<<<<< Updated upstream
 ### Created by
 
 - @pminten
@@ -50,3 +51,36 @@ Given a puzzle and a list of words return the location of the first and last let
 - @sebito91
 - @soniakeys
 - @eklatzer
+||||||| Stash base
+=======
+"jefblpepre", 
+"camdcimgtc", 
+"oivokprjsm",
+"pbwasqroua",
+"rixilelhrs",
+"wolcqlirpc",
+"screeaumgr",
+"alxhpburyi",
+"jalaycalmp",
+"clojurermt",
+### Created by
+
+- @pminten
+
+### Contributed to by
+
+- @Akasurde
+- @alebaffa
+- @bitfield
+- @ekingery
+- @ferhatelmas
+- @hilary
+- @ilmanzo
+- @kytrinyx
+- @leenipper
+- @petertseng
+- @robphoenix
+- @sebito91
+- @soniakeys
+- @eklatzer
+>>>>>>> Stashed changes
