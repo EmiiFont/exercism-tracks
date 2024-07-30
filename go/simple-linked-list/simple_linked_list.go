@@ -1,24 +1,26 @@
 package linkedlist
 
-// Define the List and Element types here.
+import (
+	"errors"
+)
+
 type Node struct {
 	next  *Node
 	value int
 }
 
 type List struct {
-	node Node
+	node *Node
 	size int
 }
 
 func New(elements []int) *List {
-	node := Node{}
-	for _, val := range elements {
-		node.next = &Node{value: val}
-		node = *node.next
-
+	list := &List{}
+	for _, v := range elements {
+		list.Push(v)
 	}
-	return &List{node: node, size: len(elements)}
+
+	return list
 }
 
 func (l *List) Size() int {
@@ -26,24 +28,56 @@ func (l *List) Size() int {
 }
 
 func (l *List) Push(element int) {
-	l.size++
-	dummy := l.node
-	for dummy.value != 0 {
-		dummy = *dummy.next
+	head := l.node
+	if head == nil {
+		l.node = &Node{value: element}
+		l.size++
+		return
+	}
+	for head.next != nil {
+		head = head.next
 	}
 
-	dummy.next = &Node{value: element}
+	head.next = &Node{value: element}
+	l.size++
 }
 
 func (l *List) Pop() (int, error) {
+	if l.size == 0 {
+		return 0, errors.New("empty list")
+	}
+	head := l.node
+	prev := head
+	for head.next != nil {
+		prev = head
+		head = head.next
+	}
+
+	value := head.value
+	prev.next = nil
 	l.size--
-	panic("Please implement the Pop function")
+	return value, nil
 }
 
 func (l *List) Array() []int {
-	panic("Please implement the Array function")
+	arrRes := []int{}
+	head := l.node
+	for head != nil {
+		arrRes = append(arrRes, head.value)
+		head = head.next
+	}
+	return arrRes
 }
 
 func (l *List) Reverse() *List {
-	panic("Please implement the Reverse function")
+	curr := l.node
+	var prev *Node
+	for curr != nil {
+		next := curr.next
+		curr.next = prev
+		prev = curr
+		curr = next
+	}
+	l.node = prev
+	return l
 }

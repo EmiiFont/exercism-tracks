@@ -1,23 +1,18 @@
 package binarysearch
 
-import (
-	"sort"
-)
-
 func SearchInts(list []int, key int) int {
-	sortedList := sort.IntSlice(list)
 	start := 0
-	end := len(sortedList) - 1
+	end := len(list) - 1
 
 	for start <= end {
 		mid := start + (end-start)/2
 
-		if sortedList[mid] == key {
+		if list[mid] == key {
 			return mid
 		}
-		if sortedList[mid] < key {
+		if list[mid] < key {
 			start = mid + 1
-		} else if sortedList[mid] > key {
+		} else if list[mid] > key {
 			end = mid - 1
 		}
 	}
