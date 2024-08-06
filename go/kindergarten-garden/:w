@@ -1,0 +1,70 @@
+package kindergarten
+
+import (
+  "errors"
+  "strings"
+  "fmt"
+)
+// Define the Garden type here.
+type Garden struct {
+  plants map[string][]string
+}
+// The diagram argument starts each row with a '\n'.  This allows Go's
+// raw string literals to present diagrams in source code nicely as two
+// rows flush left, for example,
+//
+//     diagram := `
+//     VVCCGG
+//     VVCCGG`
+
+func NewGarden(diagram string, children []string) (*Garden, error) {
+  splitted := strings.Split(diagram, "\n")
+  plants := map[string][]string{}
+  if splitted[0] == "" {
+     splitted = splitted[1:]
+   }
+  fmt.Printf("splitted: %v\n", len(splitted))
+  if len(splitted) > 2 || len(splitted[0]) != len(splitted[1]) {
+    return nil, errors.New("invalid, diagram")
+  }
+  for i := 0; i < len(splitted[0]); i += 2 {
+    if diagram[i] != 'C' && diagram[i] != 'G' && diagram[i] != 'R' && diagram[i] != 'V' {
+      return nil, errors.New("invalid values in diagram")
+    }
+    firstRow := splitted[0]
+    if _, ok := plants[children[i]]; !ok {
+      plants[children[i]] = []string{getPlantName(firstRow[i]), getPlantName(firstRow[i+1])}
+    } else {
+      return nil, errors.New("child already exists")
+    }
+  }
+  for i := 0; i < len(splitted[1]); i += 2 {
+    if diagram[i] != 'C' && diagram[i] != 'G' && diagram[i] != 'R' && diagram[i] != 'V' {
+      return nil, errors.New("invalid diagram")
+    }
+    firstRow := splitted[1]
+    plants[children[i]] = append(plants[children[i]], []string{getPlantName(firstRow[i]), getPlantName(firstRow[i+1])}...)
+  }
+  return &Garden{plants}, nil
+}
+
+func getPlantName(plant byte) string {
+  switch plant {
+    case 'C':
+      return "clover"
+    case 'G':
+      return "grass"
+    case 'R':
+      return "radishes"
+    case 'V':
+      return "violets"
+  }
+  return ""
+}
+
+func (g *Garden) Plants(child string) ([]string, bool) {
+  if _, ok := g.plants[child]; !ok {
+    return nil, false
+  }
+  return g.plants[child], true
+}
